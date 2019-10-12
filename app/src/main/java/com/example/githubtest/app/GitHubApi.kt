@@ -5,7 +5,7 @@ import io.reactivex.Single
 import retrofit2.http.GET
 import retrofit2.http.Path
 
-interface RepositoriesApi {
+interface GitHubApi {
     @GET("users/{userName}/repos")
     fun requestUserRepositories(@Path("userName") userName: String): Single<List<GitHubRepository>>
 }
