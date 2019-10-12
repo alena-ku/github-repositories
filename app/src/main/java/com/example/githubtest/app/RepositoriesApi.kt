@@ -1,6 +1,6 @@
 package com.example.githubtest.app
 
-import com.example.githubtest.models.GitHubRepository
+import com.example.githubtest.model.models.GitHubRepository
 import io.reactivex.Single
 import retrofit2.http.GET
 import retrofit2.http.Path
