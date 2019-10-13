@@ -4,4 +4,5 @@
     <string name="username">username</string>
     <string name="ok">OK</string>
     <string name="title_activity_repositories">Repositories</string>
+    <string name="title_activity_repository_details">Repository Details</string>
 </resources>

@@ -13,7 +13,17 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
+            android:name=".ui.activities.RepositoryDetailsActivity"
+            android:label="@string/title_activity_repository_details"
+            android:parentActivityName=".ui.activities.RepositoriesActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.githubtest.ui.activities.RepositoriesActivity" />
+        </activity>
+        <activity
             android:name=".ui.activities.RepositoriesActivity"
+            android:launchMode="singleTop"
             android:label="@string/title_activity_repositories"
             android:parentActivityName=".ui.activities.MainActivity"
             android:theme="@style/AppTheme.NoActionBar">

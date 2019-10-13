@@ -45,7 +45,7 @@ class RepositoriesActivity : AppCompatActivity(), RepositoriesAdapter.Interactio
     }
 
     override fun itemClicked(item: GitHubRepository) {
-
+        startActivity(RepositoryDetailsActivity.createIntent(this, item))
     }
 
 }
