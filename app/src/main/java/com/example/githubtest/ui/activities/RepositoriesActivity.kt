@@ -34,9 +34,6 @@ class RepositoriesActivity : AppCompatActivity(), RepositoriesAdapter.Interactio
         gitHubRepositories = Gson().fromJson(intent.getStringExtra(ARGS_REPOSITORIES),
             Array<GitHubRepository>::class.java).asList()
 
-        repositoriesRecyclerView.addItemDecoration(
-            DividerItemDecoration(this, DividerItemDecoration.VERTICAL)
-        )
         val repositoriesAdapter = RepositoriesAdapter(this)
         repositoriesRecyclerView.adapter = repositoriesAdapter
         repositoriesAdapter.submitList(gitHubRepositories)

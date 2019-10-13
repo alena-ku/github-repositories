@@ -3,6 +3,7 @@ package com.example.githubtest.ui
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -34,8 +35,23 @@ class RepositoriesAdapter(private val interaction: Interaction? = null) :
             interaction?.itemClicked(clicked)
         }
 
-        fun bind(item: GitHubRepository) = with(itemView) {
-            repositoryNameTextView.text = "${item.fullName}"
+        fun bind(item: GitHubRepository) {
+            with(itemView) {
+                setTextAndVisibility(repositoryNameTextView, R.string.repository_name, item.name)
+                setTextAndVisibility(repositoryDescriptionTextView, R.string.repository_description, item.description)
+                setTextAndVisibility(repositoryCreationDateTextView, R.string.repository_creation_date, item.createdAt)
+                setTextAndVisibility(repositoryUpdateDateTextView, R.string.repository_update_date, item.updatedAt)
+                setTextAndVisibility(repositoryStarsTextView, R.string.repository_stars, item.stargazersCount)
+                setTextAndVisibility(repositoryLanguageTextView, R.string.repository_language, item.language)
+            }
+        }
+
+        private fun setTextAndVisibility(textView: TextView, resourceId: Int, text: Any?) {
+            textView.visibility = if (text == null) View.GONE else View.VISIBLE
+
+            text?.let {
+                textView.text = itemView.resources.getString(resourceId, it)
+            }
         }
     }
 
