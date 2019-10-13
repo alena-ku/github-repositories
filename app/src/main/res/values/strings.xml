@@ -11,4 +11,6 @@
     <string name="repository_stars">Stars: %1$s</string>
     <string name="repository_update_date">Updated at: %1$s</string>
     <string name="repository_creation_date">Created at: %1$s</string>
+    <string name="action_sort_created">Sort by created</string>
+    <string name="action_sort_name">Sort by name</string>
 </resources>
