@@ -15,6 +15,7 @@ import kotlinx.android.synthetic.main.activity_repositories.*
 
 class RepositoriesActivity : AppCompatActivity(), RepositoriesAdapter.Interaction {
 
+    private lateinit var username: String
     private lateinit var gitHubRepositories: List<GitHubRepository>
     private lateinit var repositoriesAdapter: RepositoriesAdapter
 
@@ -41,10 +42,11 @@ class RepositoriesActivity : AppCompatActivity(), RepositoriesAdapter.Interactio
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         loadDataFromIntent()
+        setupViews()
     }
 
     private fun loadDataFromIntent() {
-        var username = Gson().fromJson(
+        username = Gson().fromJson(
             intent.getStringExtra(ARGS_USERNAME),
             String::class.java
         )
@@ -53,7 +55,9 @@ class RepositoriesActivity : AppCompatActivity(), RepositoriesAdapter.Interactio
             intent.getStringExtra(ARGS_REPOSITORIES),
             Array<GitHubRepository>::class.java
         ).asList()
+    }
 
+    private fun setupViews() {
         repositoriesAdapter = RepositoriesAdapter(username, this)
         repositoriesRecyclerView.adapter = repositoriesAdapter
 
