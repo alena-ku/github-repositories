@@ -9,6 +9,7 @@ import com.example.githubtest.model.GitHubRepositoriesRepository
 import com.example.githubtest.model.models.GitHubRepository
 import dagger.android.AndroidInjection
 import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_main.*
 import javax.inject.Inject
@@ -17,6 +18,7 @@ class MainActivity : AppCompatActivity() {
 
     @Inject
     lateinit var gitHubRepositoriesRepository: GitHubRepositoriesRepository
+    private var requestSubscription: Disposable? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         AndroidInjection.inject(this)
@@ -26,8 +28,7 @@ class MainActivity : AppCompatActivity() {
         showRepositoriesButton.setOnClickListener {
             toggleLoading(true)
 
-            //unsubscribeOnDestroy
-            gitHubRepositoriesRepository.getByUserName(userTextInputEditText.text.toString())
+            requestSubscription = gitHubRepositoriesRepository.getByUserName(userTextInputEditText.text.toString())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
@@ -38,6 +39,11 @@ class MainActivity : AppCompatActivity() {
                     toggleLoading(false)
                 })
         }
+    }
+
+    override fun onDestroy() {
+        requestSubscription?.dispose()
+        super.onDestroy()
     }
 
     private fun startRepositoriesActivity(gitHubRepositories: List<GitHubRepository>) {
