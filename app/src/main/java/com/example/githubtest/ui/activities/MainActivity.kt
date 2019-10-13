@@ -6,6 +6,7 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import com.example.githubtest.R
 import com.example.githubtest.model.GitHubRepositoriesRepository
+import com.example.githubtest.model.models.GitHubRepository
 import dagger.android.AndroidInjection
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
@@ -31,12 +32,17 @@ class MainActivity : AppCompatActivity() {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
                     toggleLoading(false)
-
+                    startRepositoriesActivity(it)
                 }, { error ->
-                    loadingFailed(error.localizedMessage)
+                    loadingFailed(error.message!!)
                     toggleLoading(false)
                 })
         }
+    }
+
+    private fun startRepositoriesActivity(gitHubRepositories: List<GitHubRepository>) {
+        val intent = RepositoriesActivity.createIntent(this, gitHubRepositories)
+        startActivity(intent)
     }
 
     fun loadingFailed(message: String) {
