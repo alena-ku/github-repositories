@@ -14,14 +14,13 @@ import kotlinx.android.synthetic.main.activity_repositories.*
 
 class RepositoriesActivity : AppCompatActivity(), RepositoriesAdapter.Interaction {
 
-
-    private lateinit var gitHubRepositories: List<GitHubRepository>
-
     companion object{
         private const val ARGS_REPOSITORIES = "repositories"
+        private const val ARGS_USERNAME = "username"
 
-        fun createIntent(context: Context, gitHubRepositories: List<GitHubRepository>) =
+        fun createIntent(context: Context, username: String, gitHubRepositories: List<GitHubRepository>) =
             Intent(context, RepositoriesActivity::class.java).apply {
+                putExtra(ARGS_USERNAME, Gson().toJson(username))
                 putExtra(ARGS_REPOSITORIES, Gson().toJson(gitHubRepositories))
             }
     }
@@ -31,10 +30,16 @@ class RepositoriesActivity : AppCompatActivity(), RepositoriesAdapter.Interactio
         setContentView(R.layout.activity_repositories)
         setSupportActionBar(toolbar)
 
-        gitHubRepositories = Gson().fromJson(intent.getStringExtra(ARGS_REPOSITORIES),
-            Array<GitHubRepository>::class.java).asList()
+        var gitHubRepositories = Gson().fromJson(
+            intent.getStringExtra(ARGS_REPOSITORIES),
+            Array<GitHubRepository>::class.java
+        ).asList()
 
-        val repositoriesAdapter = RepositoriesAdapter(this)
+        var username = Gson().fromJson(
+            intent.getStringExtra(ARGS_USERNAME),
+            String::class.java)
+
+        val repositoriesAdapter = RepositoriesAdapter(username, this)
         repositoriesRecyclerView.adapter = repositoriesAdapter
         repositoriesAdapter.submitList(gitHubRepositories)
 

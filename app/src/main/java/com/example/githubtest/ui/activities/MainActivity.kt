@@ -41,8 +41,11 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun startRepositoriesActivity(gitHubRepositories: List<GitHubRepository>) {
-        val intent = RepositoriesActivity.createIntent(this, gitHubRepositories)
-        startActivity(intent)
+        startActivity(
+            RepositoriesActivity.createIntent(
+                this, userTextInputEditText.text.toString(), gitHubRepositories
+            )
+        )
     }
 
     fun loadingFailed(message: String) {

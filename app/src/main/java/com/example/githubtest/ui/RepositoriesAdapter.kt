@@ -11,7 +11,7 @@ import com.example.githubtest.R
 import com.example.githubtest.model.models.GitHubRepository
 import kotlinx.android.synthetic.main.list_item_repository.view.*
 
-class RepositoriesAdapter(private val interaction: Interaction? = null) :
+class RepositoriesAdapter(private val username: String, private val interaction: Interaction? = null) :
     ListAdapter<GitHubRepository, RepositoriesAdapter.ViewHolder>(ItemDiffCallback()) {
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) =
@@ -37,7 +37,9 @@ class RepositoriesAdapter(private val interaction: Interaction? = null) :
 
         fun bind(item: GitHubRepository) {
             with(itemView) {
-                setTextAndVisibility(repositoryNameTextView, R.string.repository_name, item.name)
+                val repoName = if (username == item.owner!!.login) item.name else item.fullName
+
+                setTextAndVisibility(repositoryNameTextView, R.string.repository_name, repoName)
                 setTextAndVisibility(repositoryDescriptionTextView, R.string.repository_description, item.description)
                 setTextAndVisibility(repositoryCreationDateTextView, R.string.repository_creation_date, item.createdAt)
                 setTextAndVisibility(repositoryUpdateDateTextView, R.string.repository_update_date, item.updatedAt)
